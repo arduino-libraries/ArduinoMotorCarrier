@@ -1,3 +1,12 @@
+/*
+  STANDALONE FIRMWARE UPDATE FOR MKR Motor Shiuld
+
+  To generate a new firmware, compile D11-Firmware with target MKRMotorShield, 4KB bootloader, LTO enabled, pinmap complete
+  and execute
+
+  echo -n "const " > fw.h && xxd -i D11-firmware.ino.bin >> fw.h
+*/
+
 #include "Wire.h"
 #include "fw.h"
 
@@ -56,7 +65,7 @@ void setup() {
   Serial.println("Starting flash");
 
   int address = 0;
-  while (address < (I2C_Motor_bridge_D11_ino_bin_len + 0x1000)) {
+  while (address < (D11_firmware_ino_bin_len + 0x1000)) {
     int retry = 0;
     do {
       Wire.requestFrom(I2C_ADDRESS, 4);
@@ -73,7 +82,7 @@ void setup() {
 
     uint8_t crc = 0;
     for (int j = 0; j < 64; j++) {
-      crc ^= I2C_Motor_bridge_D11_ino_bin[address - 0x1000 + j];
+      crc ^= D11_firmware_ino_bin[address - 0x1000 + j];
     }
 
     Serial.println(crc, HEX);
@@ -81,7 +90,7 @@ void setup() {
     Wire.beginTransmission(I2C_ADDRESS);
     Wire.write('w');
     Wire.write(crc);
-    Wire.write(&I2C_Motor_bridge_D11_ino_bin[address - 0x1000], 64);
+    Wire.write(&D11_firmware_ino_bin[address - 0x1000], 64);
     Wire.endTransmission();
   }
 
