@@ -44,7 +44,9 @@ enum IRQCause {
 #define IN3 A5
 #define IN4 A2
 
+namespace mc {
 int getData(Commands cmd, uint8_t target, uint8_t* buf);
 void setData(Commands cmd, uint8_t target, int data);
 void setDataPIDGains(Commands cmd, uint8_t target, int16_t P, int16_t I, int16_t D);
 int getData(Commands cmd, uint8_t* buf);
+}

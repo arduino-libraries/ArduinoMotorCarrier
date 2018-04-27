@@ -1,5 +1,6 @@
 #include "MKRMotorShield.h"
 
+namespace mc {
 void setDataPIDGains(Commands cmd, uint8_t target, int16_t P, int16_t I, int16_t D) {
   Wire.beginTransmission(I2C_ADDRESS);
   Wire.write((uint8_t)cmd);
@@ -37,3 +38,25 @@ int getData(Commands cmd, uint8_t target, uint8_t* buf) {
 int getData(Commands cmd, uint8_t* buf) {
   return getData(cmd, 0, buf);
 }
+}
+
+mc::MotorController controller;
+
+mc::ServoMotor servo1;
+mc::ServoMotor servo2;
+mc::ServoMotor servo3;
+mc::ServoMotor servo4;
+
+mc::DCMotor M1;
+mc::DCMotor M2;
+d21::DCMotor M3;
+d21::DCMotor M4;
+
+mc::Encoder encoder1;
+mc::Encoder encoder2;
+
+mc::PID pid1;
+mc::PID pid2;
+
+mc::Battery battery;
+

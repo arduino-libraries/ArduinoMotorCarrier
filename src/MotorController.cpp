@@ -1,5 +1,6 @@
 #include "MotorController.h"
 #include "Common.h"
+#include "Wire.h"
 
 String mc::MotorController::getFWVersion() {
   char ret[5];
@@ -10,6 +11,7 @@ String mc::MotorController::getFWVersion() {
 
 void mc::MotorController::reboot() {
   setData(RESET, 0, 0);
+  delay(500);
 }
 
 void mc::MotorController::ping() {
@@ -21,3 +23,12 @@ float mc::MotorController::getTemperature() {
   getData(GET_INTERNAL_TEMP, (uint8_t*)&ret);
   return (float)ret / 1000.0f;
 }
+
+int mc::MotorController::begin() {
+  Wire.begin();
+  String version = getFWVersion();
+  if (version.c_str()[0] == '0') {
+    return 1;
+  }
+  return 0;
+};

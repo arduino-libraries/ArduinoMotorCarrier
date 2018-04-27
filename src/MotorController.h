@@ -10,6 +10,7 @@ class MotorController {
     String getFWVersion();
     void reboot();
     void ping();
+    int begin();
     float getTemperature();
 };
 }

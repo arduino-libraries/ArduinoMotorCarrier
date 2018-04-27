@@ -1,74 +1,51 @@
 #include "MKRMotorShield.h"
 
-const int pingPin = IN4;
-const byte interruptPin = IN2;
-
-long encoderResetValue = 5;
-
-mc::MotorController controller;
-
-mc::ServoMotor servo1 = mc::ServoMotor();
-mc::ServoMotor servo2 = mc::ServoMotor();
-mc::ServoMotor servo3 = mc::ServoMotor();
-mc::ServoMotor servo4 = mc::ServoMotor();
-
-mc::DCMotor M2 = mc::DCMotor();
-mc::DCMotor M1 = mc::DCMotor();
-d21::DCMotor M3 = d21::DCMotor();
-d21::DCMotor M4 = d21::DCMotor();
-
-mc::Encoder encoder2 = mc::Encoder();
-mc::Encoder encoder1 = mc::Encoder();
-
-mc::PID pid2 = mc::PID();
-mc::PID pid1 = mc::PID();
-
-volatile uint8_t irq_status;
-
-void getDataIrq() {
-  irq_status = 1;
-};
-
-int m2_pos = 0;
-//boolean toggle1 = false;
-//boolean toggle2 = false;
-
 void setup() {
-  
+
   Serial.begin(115200);
   while (!Serial);
-  // create mkrshield connection
-  Wire.begin();
-  
-  delay(500);
 
-  //create encoder2 object in MATLAB
-  pinMode(IRQ_PIN, INPUT_PULLUP);
-  attachInterrupt(IRQ_PIN, getDataIrq, FALLING);  
-  encoder2.resetCounter(0); 
-  
-// create dcmotor2 object in matlab
-  M2.setFrequency(100);  
+  // Start communicationg with the motor shield
+  if (controller.begin()) {
+    Serial.print("MKR Motor Shield connected, firmware version ");
+    Serial.println(controller.getFWVersion());
+  } else {
+    Serial.println("Couldn't connect! Is the red led blinking? You may need to update the firmware with FWUpdater sketch");
+    while (1);
+  }
 
-  // enable dc motor2 object
+  // Reboot the motor controller; brings every value back to default
+  controller.reboot();
 
-  M2.setDuty(90);
+  // Reset the encoder internal counter to zero (can be set to any initial value)
+  encoder1.resetCounter(0);
 
-  while(m2_pos < 36000){
-    m2_pos = encoder2.getRawCount();
+  // Start DC Motor 1 (labeled M1) with 90% of maximum speed, clockwise
+  M1.setFrequency(100);
+  M1.setDuty(90);
+
+  // Read the encoder connected to Motor1 until it reaches 36000 counts
+  int motor1Pos = 0;
+  while (motor1Pos < 36000) {
+    motor1Pos = encoder1.getRawCount();
+    // Remember to call ping() here and there!
+    // If you forget to do so the controller will think that the user sketch is not running and will freeze.
+    // You can wait up to 3 seconds between pings before the reset kicks in
     controller.ping();
   }
-  Serial.println(m2_pos);
-  //M2.setDuty(0);   
-  pid2.setControlMode(CL_POSITION);
-  pid2.setGains(25, 0, 3);
-  pid2.setMaxAcceleration(4000); 
-  controller.ping();
-  delay(1000);
-  pid2.setSetpoint(TARGET_POSITION, 10000);
+
+  // Switch motor control from DIRECT to PID-driven.
+  // This way, you can program the motor to reach a certain position or velocity without any further intervention.
+  // The PID can be carefully tuned if a particular profile is needed.
+  pid1.setControlMode(CL_POSITION);
+  pid1.setGains(25, 0, 3);
+  pid1.setMaxAcceleration(4000);
+  pid1.setSetpoint(TARGET_POSITION, 5000);
 }
+
 void loop() {
-  m2_pos = encoder2.getRawCount();
-  Serial.println(m2_pos);
+  // Simply print the actual position while the PID is running, pinging the controller every loop()
+  Serial.println(encoder1.getRawCount());
   controller.ping();
+  delay(100);
 }
