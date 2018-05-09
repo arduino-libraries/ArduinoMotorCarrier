@@ -1,0 +1,61 @@
+#######################################
+# Syntax Coloring Map For MKR Motor Shield
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+servo1	KEYWORD1
+servo2	KEYWORD1
+servo3	KEYWORD1
+servo4	KEYWORD1
+M1	KEYWORD1
+M2	KEYWORD1
+M3	KEYWORD1
+M4	KEYWORD1
+encoder1	KEYWORD1
+encoder2	KEYWORD1
+pid1	KEYWORD1
+pid2	KEYWORD1
+battery	KEYWORD1
+controller	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+getRaw	KEYWORD2
+getConverted	KEYWORD2
+getFiltered	KEYWORD2
+setDuty	KEYWORD2
+setFrequency	KEYWORD2
+getRawCount	KEYWORD2
+getOverflowUnderflow	KEYWORD2
+getCountPerSecond	KEYWORD2
+resetCounter	KEYWORD2
+setIrqOnCount	KEYWORD2
+setIrqOnVelocity	KEYWORD2
+getFWVersion	KEYWORD2
+reboot	KEYWORD2
+ping	KEYWORD2
+begin	KEYWORD2
+getTemperature	KEYWORD2
+setGains	KEYWORD2
+resetGains	KEYWORD2
+setControlMode	KEYWORD2
+setSetpoint	KEYWORD2
+setMaxAcceleration		KEYWORD2
+setMaxVelocity	KEYWORD2
+setLimits	KEYWORD2
+setAngle	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+CL_OPEN_LOOP	LITERAL1
+CL_POSITION	LITERAL1
+CL_VELOCITY	LITERAL1
+TARGET_VELOCITY	LITERAL1
+TARGET_POSITION	LITERAL1
