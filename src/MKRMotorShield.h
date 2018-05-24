@@ -14,6 +14,9 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#ifndef __MKRMOTORSHIELD__
+#define __MKRMOTORSHIELD__
+
 #include <Wire.h>
 #include "Encoder.h"
 #include "Battery.h"
@@ -42,3 +45,5 @@ extern mc::PID pid1;
 extern mc::PID pid2;
 
 extern mc::Battery battery;
+
+#endif

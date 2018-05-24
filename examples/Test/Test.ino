@@ -5,7 +5,7 @@
   This example code is in the public domain.
 */
 
-#include "MKRMotorShield.h"
+#include "MKRMotorCarrier.h"
 
 void setup() {
 
