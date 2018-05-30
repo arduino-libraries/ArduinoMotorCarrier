@@ -28,7 +28,6 @@ void setup() {
   encoder1.resetCounter(0);
 
   // Start DC Motor 1 (labeled M1) with 90% of maximum speed, clockwise
-  M1.setFrequency(100);
   M1.setDuty(90);
 
   // Read the encoder connected to Motor1 until it reaches 36000 counts
