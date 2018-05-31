@@ -5,8 +5,9 @@
 #define SCALE_FACTOR  (77)
 
 void Battery::readBattery() {
-  readBuf[index % 10] = (((int)analogRead(pin)) / SCALE_FACTOR);
-  index ++;
+  index++;
+  index = index%10;
+  readBuf[index] = (int)analogRead(pin);
 }
 
 void readBattery_wrapper(void* arg)
@@ -18,14 +19,15 @@ void readBattery_wrapper(void* arg)
 Battery::Battery(int pinA) {
   pin = pinA;
   registerTimedEvent(readBattery_wrapper, this, 1000);
+  readBuf[0] = (int)analogRead(pin);
 }
 
 void Battery::getRaw() {
-  Wire.write((int)analogRead(pin));
+  Wire.write(readBuf[index]);
 }
 
 void Battery::getConverted() {
-  Wire.write((int)(analogRead(pin) / SCALE_FACTOR));
+  Wire.write(readBuf[index] / SCALE_FACTOR);
 }
 
 void Battery::getFiltered() {
@@ -33,5 +35,5 @@ void Battery::getFiltered() {
   for (int i = 0; i < 10; i++) {
     total += readBuf[i];
   }
-  Wire.write((int)(total/10));
+  Wire.write((int)(total/(10*SCALE_FACTOR)));
 }

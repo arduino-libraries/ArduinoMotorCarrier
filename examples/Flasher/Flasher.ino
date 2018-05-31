@@ -65,7 +65,7 @@ void setup() {
   Serial.println("Starting flash");
 
   int address = 0;
-  while (address < (D11_firmware_ino_bin_len + 0x1000)) {
+  while (address < (D11_Firmware_ino_bin_len + 0x1000)) {
     int retry = 0;
     do {
       Wire.requestFrom(I2C_ADDRESS, 4);
@@ -82,7 +82,7 @@ void setup() {
 
     uint8_t crc = 0;
     for (int j = 0; j < 64; j++) {
-      crc ^= D11_firmware_ino_bin[address - 0x1000 + j];
+      crc ^= D11_Firmware_ino_bin[address - 0x1000 + j];
     }
 
     Serial.println(crc, HEX);
@@ -90,7 +90,7 @@ void setup() {
     Wire.beginTransmission(I2C_ADDRESS);
     Wire.write('w');
     Wire.write(crc);
-    Wire.write(&D11_firmware_ino_bin[address - 0x1000], 64);
+    Wire.write(&D11_Firmware_ino_bin[address - 0x1000], 64);
     Wire.endTransmission();
   }
 

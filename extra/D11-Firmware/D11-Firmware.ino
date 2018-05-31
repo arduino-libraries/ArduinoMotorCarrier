@@ -12,7 +12,7 @@
 // compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=0kb,pinmap=complete,lto=disabled during development
 // compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=4kb,pinmap=complete,lto=enabled for release
 
-const char* FW_VERSION = "0.06";
+const char* FW_VERSION = "0.07";
 
 DCMotor dcmotors[2] = {
   DCMotor(MOTOR_1_COUNTER, MOTOR_1_PIN_A, MOTOR_1_PIN_B),
@@ -47,7 +47,7 @@ void setup() {
   WDT->CTRL.reg &= ~WDT_CTRL_ENABLE;
   while (WDT->STATUS.reg & WDT_STATUS_SYNCBUSY);
 
-  temp_init();
+  //temp_init();
 
   Wire.begin(I2C_ADDRESS);
   Wire.onRequest(requestEvent);
@@ -207,7 +207,7 @@ void getFWVersion() {
 }
 
 void getInternalTemperature() {
-  Wire.write(temp_raw_to_mdeg(temp_read_raw()));
+  //Wire.write(temp_raw_to_mdeg(temp_read_raw()));
 }
 
 void reboot() {

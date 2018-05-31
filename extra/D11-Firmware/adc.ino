@@ -1,3 +1,5 @@
+#if 0
+
 #define WAIT_ADC_SYNC while (ADC->STATUS.bit.SYNCBUSY) {}
 #define WAIT_ADC_RESET while (ADC->CTRLA.bit.SWRST) {}
 
@@ -102,3 +104,5 @@ int32_t temp_raw_to_mdeg(uint32_t raw) {
   int32_t mdeg = roomMdeg + ((hotMdeg-roomMdeg) * (adc-roomADC)) / (hotADC-roomADC);
   return mdeg;
 }
+
+#endif
