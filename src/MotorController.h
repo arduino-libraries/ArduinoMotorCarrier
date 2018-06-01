@@ -14,11 +14,12 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#ifndef __MKRMOTORCONTROLLER__
+#define __MKRMOTORCONTROLLER__
+
 #include "Arduino.h"
 
 namespace mc {
-
-static volatile uint8_t irq_status;
 
 class MotorController {
   public:
@@ -28,5 +29,9 @@ class MotorController {
     void ping();
     int begin();
     float getTemperature();
+    uint8_t getIrqStatus();
+    volatile uint8_t irq_status;
 };
 }
+
+#endif //__MKRMOTORCONTROLLER__

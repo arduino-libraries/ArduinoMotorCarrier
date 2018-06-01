@@ -42,7 +42,10 @@ int getData(Commands cmd, uint8_t target, uint8_t* buf) {
   Wire.endTransmission();
 
   Wire.requestFrom(I2C_ADDRESS, 5);
-  mc::irq_status = Wire.read();
+  uint8_t status =  Wire.read();
+  if (status != 0) {
+    controller.irq_status = status;
+  }
 
   int i = 0;
   while (Wire.available()) {

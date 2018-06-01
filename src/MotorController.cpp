@@ -48,3 +48,9 @@ int mc::MotorController::begin() {
   }
   return 0;
 };
+
+uint8_t mc::MotorController::getIrqStatus() {
+  int ret;
+  getData(CLEAR_IRQ, (uint8_t*)&ret);
+  return irq_status;
+}

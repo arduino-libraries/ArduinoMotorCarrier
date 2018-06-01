@@ -14,7 +14,7 @@ void populateRegisters_wrapper(void* arg) {
   for (int i = 0; i < 2; i++) {
     int value = obj[i]->read();
 
-    if (obj[i]->irqEnabled && (abs(value - obj[i]->targetCount) < 10 )) {
+    if (obj[i]->irqCountEnabled && (abs(value - obj[i]->targetCount) < 10 )) {
       requestAttention(ENCODER_COUNTER_REACHED);
     }
     if (value - val[i] < -30000) {
@@ -31,9 +31,9 @@ void populateRegisters_wrapper(void* arg) {
     obj[i]->position = Fix16(value * 1.0f);
 
     // abs doesn't play well with Fix16 (missing an overload for minus)
-    Fix16 ratioToTargetVelocityPercent = (Fix16(obj[i]->velocity) - obj[i]->targetVelocity) / obj[i]->targetVelocity;
+    Fix16 ratioToTargetVelocityPercent = ((Fix16(obj[i]->velocity) - obj[i]->targetVelocity) * Fix16(100.0f)) / obj[i]->targetVelocity;
 
-    if (obj[i]->irqEnabled && (ratioToTargetVelocityPercent < obj[i]->irqRatio) && (ratioToTargetVelocityPercent > (obj[i]->irqRatio * -1.0f) )) {
+    if (obj[i]->irqVelocityEnabled && (ratioToTargetVelocityPercent < obj[i]->irqRatio) && (ratioToTargetVelocityPercent > (obj[i]->irqRatio * -1.0f) )) {
       requestAttention(ENCODER_VELOCITY_REACHED);
     }
 

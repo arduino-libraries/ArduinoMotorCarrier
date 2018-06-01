@@ -12,7 +12,7 @@
 // compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=0kb,pinmap=complete,lto=disabled during development
 // compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=4kb,pinmap=complete,lto=enabled for release
 
-const char* FW_VERSION = "0.07";
+const char* FW_VERSION = "0.08";
 
 DCMotor dcmotors[2] = {
   DCMotor(MOTOR_1_COUNTER, MOTOR_1_PIN_A, MOTOR_1_PIN_B),
@@ -165,7 +165,6 @@ void requestEvent() {
 
   // Always reply with irq status
   Wire.write(irq_status);
-  irq_status = 0;
 
   switch (command) {
     case GET_VERSION:
@@ -192,14 +191,18 @@ void requestEvent() {
     case GET_INTERNAL_TEMP:
       getInternalTemperature();
       break;
+    case CLEAR_IRQ:
+      Wire.write((int)irq_status);
+      irq_status = 0;
+      break;
   }
 }
 
 void requestAttention(int cause) {
+  irq_status |= (1 << cause);
   if (irq_enabled) {
     digitalWrite(IRQ_PIN, LOW);
   }
-  irq_status |= (1 << cause);
 }
 
 void getFWVersion() {

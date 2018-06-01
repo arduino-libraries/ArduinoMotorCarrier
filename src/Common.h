@@ -40,6 +40,7 @@ enum Commands {
   SET_MIN_MAX_DUTY_CYCLE_CL_MOTOR,
   PING,
   GET_INTERNAL_TEMP,
+  CLEAR_IRQ,
 };
 
 enum IRQCause {
