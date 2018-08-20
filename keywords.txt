@@ -45,7 +45,7 @@ setGains	KEYWORD2
 resetGains	KEYWORD2
 setControlMode	KEYWORD2
 setSetpoint	KEYWORD2
-setMaxAcceleration		KEYWORD2
+setMaxAcceleration	KEYWORD2
 setMaxVelocity	KEYWORD2
 setLimits	KEYWORD2
 setAngle	KEYWORD2
