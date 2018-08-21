@@ -28,8 +28,8 @@ void calculatePID_wrapper(void* arg) {
       //obj[i]->motor->setDuty(dutyout);  not working so using line below instead
 
       //deadzone compensation
-      //if (dutyout > 0) dutyout += 20;
-      //if (dutyout < 0) dutyout -= 20;
+      if (dutyout > 0) dutyout += 20;
+      if (dutyout < 0) dutyout -= 20;
       obj[i]->motor->setDuty(dutyout);
     }
   }
