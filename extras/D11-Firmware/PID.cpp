@@ -28,14 +28,21 @@ void calculatePID_wrapper(void* arg) {
       //obj[i]->motor->setDuty(dutyout);  not working so using line below instead
 
       //deadzone compensation
-      if (dutyout > 0) dutyout += 20;
-      if (dutyout < 0) dutyout -= 20;
+      //if (dutyout > 0) dutyout += 20;
+      //if (dutyout < 0) dutyout -= 20;
       obj[i]->motor->setDuty(dutyout);
     }
   }
 }
 
+Fix16 KP_DEFAULT, KI_DEFAULT, KD_DEFAULT;
+
 PIDWrapper::PIDWrapper(Fix16& inputpos, Fix16& inputvelo, DCMotor* motor, int index, int periodms_velo , int periodms_pos) {
+
+  KP_DEFAULT = Fix16(2.0);
+  KI_DEFAULT = Fix16(2.0);
+  KD_DEFAULT = Fix16(0.0);
+
   pid_pos = new PID(&inputpos, &velocmd, &targetpos, KP_DEFAULT, KI_DEFAULT, KD_DEFAULT, DIRECT);
   pid_velo = new PID(&inputvelo, &actualDuty, &targetvelo, KP_DEFAULT, KI_DEFAULT, KD_DEFAULT, DIRECT);
   pid_pos->SetSampleTime(periodms_pos);
@@ -53,3 +60,13 @@ PIDWrapper::PIDWrapper(Fix16& inputpos, Fix16& inputvelo, DCMotor* motor, int in
     registerTimedEvent(calculatePID_wrapper, this, 0);
   }
 }
+
+void PIDWrapper::resetGains() {
+  cl_control prev_mode = this->mode;
+  this->mode = CL_VELOCITY;
+  setGains(KP_DEFAULT, KI_DEFAULT, KD_DEFAULT);
+  this->mode = CL_POSITION;
+  setGains(KP_DEFAULT, KI_DEFAULT, KD_DEFAULT);
+  this->mode = prev_mode;
+  run();
+};

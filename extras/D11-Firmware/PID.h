@@ -18,10 +18,6 @@ typedef enum {
   TARGET_POSITION
 } cl_target;
 
-static Fix16 KP_DEFAULT = Fix16(2.0);
-static Fix16 KI_DEFAULT = Fix16(2.0);
-static Fix16 KD_DEFAULT = Fix16(0.0);
-
 class PIDWrapper {
 
   public:
@@ -37,15 +33,7 @@ class PIDWrapper {
       run();
     };
 
-    void resetGains() {
-      cl_control prev_mode = this->mode;
-      this->mode = CL_VELOCITY;
-      setGains(KP_DEFAULT, KI_DEFAULT, KD_DEFAULT);
-      this->mode = CL_POSITION;
-      setGains(KP_DEFAULT, KI_DEFAULT, KD_DEFAULT);
-      this->mode = prev_mode;
-      run();
-    };
+    void resetGains();
 
     void setControlMode(cl_control mode) {
       this->mode = mode;

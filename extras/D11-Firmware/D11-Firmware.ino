@@ -12,7 +12,7 @@
 // compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=0kb,pinmap=complete,lto=disabled during development
 // compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=4kb,pinmap=complete,lto=enabled for release
 
-const char* FW_VERSION = "0.08";
+const char* FW_VERSION = "0.09";
 
 DCMotor dcmotors[2] = {
   DCMotor(MOTOR_1_COUNTER, MOTOR_1_PIN_A, MOTOR_1_PIN_B),
@@ -76,22 +76,35 @@ void loop() {
 }
 
 void receiveEvent(int howMany) {
+  noInterrupts();
   command = Wire.read();
+
+  if (command < GET_VERSION) {
+    // empty buffer
+    while (Wire.available()) {
+      Wire.read();
+    }
+    interrupts();
+    return;
+  }
+
   if (Wire.available()) {
     target = Wire.read();
   } else {
+    interrupts();
     return;
   }
   int value = 0;
 
 
   if (!Wire.available()) {
+    interrupts();
     return;
   }
 
   uint8_t buf[8];
   int i = 0;
-  while (Wire.available()) {
+  while (Wire.available() && i < sizeof(buf)) {
     buf[i++] = (uint8_t)Wire.read();
   }
 
@@ -155,9 +168,11 @@ void receiveEvent(int howMany) {
       pid_control[target].setLimits(*((int16_t*)&buf[0]), *((int16_t*)&buf[2]));
       break;
   }
+  interrupts();
 }
 
 void requestEvent() {
+  noInterrupts();
   //deassert IRQ
   if (irq_enabled) {
     digitalWrite(IRQ_PIN, HIGH);
@@ -196,6 +211,7 @@ void requestEvent() {
       irq_status = 0;
       break;
   }
+  interrupts();
 }
 
 void requestAttention(int cause) {
