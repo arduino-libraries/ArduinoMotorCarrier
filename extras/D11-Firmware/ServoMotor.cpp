@@ -2,7 +2,11 @@
 
 void ServoMotor::setDuty(int duty) {
   this->duty = duty;
-  analogWrite(pin, duty);
+  if (duty < 0) {
+    pinMode(pin, INPUT);
+  } else {
+    analogWrite(pin, duty);
+  }
 }
 
 void ServoMotor::setFrequency(int frequency) {
