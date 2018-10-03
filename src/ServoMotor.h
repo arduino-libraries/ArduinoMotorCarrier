@@ -22,6 +22,7 @@ class ServoMotor {
   public:
     ServoMotor();
     void setAngle(int angle);
+    void detach();
     void setFrequency(int frequency);
   private:
     int instance;
