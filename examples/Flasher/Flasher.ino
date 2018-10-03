@@ -9,6 +9,7 @@
 
 #include "Wire.h"
 #include "fw.h"
+#include "MKRMotorCarrier.h"
 
 #define I2C_ADDRESS 0x09
 
@@ -34,7 +35,7 @@ void setup() {
   int prev_address = -1;
 
   Wire.beginTransmission(0x66);
-  Wire.write((uint8_t)1);
+  Wire.write((uint8_t)GET_VERSION);
   Wire.write((uint8_t)0);
   Wire.endTransmission();
 
@@ -49,7 +50,7 @@ void setup() {
 
   if (version.c_str()[0] == '0') {
     Serial.println("Reset D11");
-    setDataRunning(2, 0, 0);
+    setDataRunning(RESET, 0, 0);
     delay(10);
   }
 
@@ -102,7 +103,7 @@ void setup() {
   delay(1000);
 
   Wire.beginTransmission(0x66);
-  Wire.write((uint8_t)1);
+  Wire.write((uint8_t)GET_VERSION);
   Wire.write((uint32_t)0);
   Wire.endTransmission();
 
