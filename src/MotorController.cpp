@@ -54,3 +54,9 @@ uint8_t mc::MotorController::getIrqStatus() {
   getData(CLEAR_IRQ, (uint8_t*)&ret);
   return irq_status;
 }
+
+int mc::MotorController::getFreeRam() {
+  int ret;
+  getData(GET_FREE_RAM, (uint8_t*)&ret);
+  return ret;
+}

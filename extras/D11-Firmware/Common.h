@@ -25,6 +25,7 @@ enum Commands {
   PING,
   GET_INTERNAL_TEMP,
   CLEAR_IRQ,
+  GET_FREE_RAM,
 };
 
 enum IRQCause {

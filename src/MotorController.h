@@ -30,6 +30,7 @@ class MotorController {
     int begin();
     float getTemperature();
     uint8_t getIrqStatus();
+    int getFreeRam();
     volatile uint8_t irq_status;
 };
 }
