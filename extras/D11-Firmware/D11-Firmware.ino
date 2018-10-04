@@ -6,6 +6,7 @@
 #include "Common.h"
 #include "Events.h"
 #include "PID.h"
+#include "FreeRAM.h"
 
 #define Fix16 mn::MFixedPoint::FpF32<8>
 
@@ -206,6 +207,9 @@ void requestEvent() {
     case CLEAR_IRQ:
       Wire.write((int)irq_status);
       irq_status = 0;
+      break;
+    case GET_FREE_RAM:
+      Wire.write((int)FreeRam());
       break;
   }
   interrupts();
