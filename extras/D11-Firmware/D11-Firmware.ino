@@ -13,7 +13,7 @@
 // compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=0kb,pinmap=complete,lto=disabled during development
 // compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=4kb,pinmap=complete,lto=enabled for release
 
-const char* FW_VERSION = "0.09";
+const char* FW_VERSION = "0.10";
 
 DCMotor* dcmotors[2];
 ServoMotor* servos[4];
