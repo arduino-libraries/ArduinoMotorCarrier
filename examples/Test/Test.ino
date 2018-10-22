@@ -24,6 +24,8 @@ void setup() {
   // Reboot the motor controller; brings every value back to default
   controller.reboot();
 
+  Serial.println(controller.getFreeRam());
+
   // Reset the encoder internal counter to zero (can be set to any initial value)
   encoder1.resetCounter(0);
 
