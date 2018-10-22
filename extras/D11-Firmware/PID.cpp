@@ -28,8 +28,8 @@ void calculatePID_wrapper(void* arg) {
       //obj[i]->motor->setDuty(dutyout);  not working so using line below instead
 
       //deadzone compensation
-      //if (dutyout > 0) dutyout += 20;
-      //if (dutyout < 0) dutyout -= 20;
+      if (dutyout > 0) dutyout += 10;
+      if (dutyout < 0) dutyout -= 10;
       obj[i]->motor->setDuty(dutyout);
     }
   }
@@ -47,8 +47,8 @@ PIDWrapper::PIDWrapper(Fix16& inputpos, Fix16& inputvelo, DCMotor* motor, int in
   pid_velo = new PID(&inputvelo, &actualDuty, &targetvelo, KP_DEFAULT, KI_DEFAULT, KD_DEFAULT, DIRECT);
   pid_pos->SetSampleTime(periodms_pos);
   pid_velo->SetSampleTime(periodms_velo);
-  pid_pos->SetOutputLimits((short) - 30, (short)30); //position pid can only command +/- max_velo
-  pid_velo->SetOutputLimits((short) - 80, (short)80); //velocity pid can only command +/- 100 PWM duty cycle
+  pid_pos->SetOutputLimits(Fix16(-30.0), Fix16(30.0)); //position pid can only command +/- max_velo
+  pid_velo->SetOutputLimits(Fix16(-90.0), Fix16(90.0)); //velocity pid can only command +/- 100 PWM duty cycle
 
   run();
 
