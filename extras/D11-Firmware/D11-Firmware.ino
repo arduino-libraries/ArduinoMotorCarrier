@@ -10,8 +10,9 @@
 
 #define Fix16 mn::MFixedPoint::FpF32<8>
 
-// compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=0kb,pinmap=complete,lto=disabled during development
-// compile me with target mkrmotorshield:samd:mkrmotorshield:bootloader=4kb,pinmap=complete,lto=enabled for release
+// grab core from https://github.com/arduino/ArduinoCore-samd/tree/mkrmotorcarrier
+// compile me with target arduino:samd:mkrmotorshield:bootloader=0kb,pinmap=complete,lto=disabled during development
+// compile me with target arduino:samd:mkrmotorshield:bootloader=4kb,pinmap=complete,lto=enabled for release
 
 const char* FW_VERSION = "0.10";
 

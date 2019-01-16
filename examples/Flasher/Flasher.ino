@@ -4,7 +4,7 @@
   To generate a new firmware, compile D11-Firmware with target MKRMotorShield, 4KB bootloader, LTO enabled, pinmap complete
   and execute
 
-  echo -n "const " > fw.h && xxd -i D11-firmware.ino.bin >> fw.h
+  echo -n "const " > fw.h && xxd -i D11-Firmware.ino.bin >> fw.h
 */
 
 #include "Wire.h"
