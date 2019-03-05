@@ -53,7 +53,7 @@ void setup() {
   Wire.onReceive(receiveEvent);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(IRQ_PIN, OUTPUT);
-  analogWriteResolution(24);
+  analogWriteResolution(8);
 }
 
 volatile uint8_t command = 0;
