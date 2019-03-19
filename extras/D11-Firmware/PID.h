@@ -80,17 +80,17 @@ class PIDWrapper {
     };
 
     cl_control mode = CL_VELOCITY;
-    Fix16 targetpos = 0.0;
-    Fix16 targetvelo = 0.0;
-    Fix16 maxAcceleration;
-    Fix16 maxVelocity;
+    Fix16 targetpos = 0.0f;
+    Fix16 targetvelo = 0.0f;
+    Fix16 maxAcceleration = 0.0f;
+    Fix16 maxVelocity = 0.0f;
     int maxDuty = 100;
     int minDuty = 0;
-    Fix16 actualDuty;
+    Fix16 actualDuty = 0.0f;
     Fix16 velocmd = 0.0f;
-    PID* pid_velo;
-    PID* pid_pos;
-    DCMotor* motor;
+    PID* pid_velo = NULL;
+    PID* pid_pos = NULL;
+    DCMotor* motor = NULL;
     bool disabled = true;
 };
 

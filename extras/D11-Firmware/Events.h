@@ -16,7 +16,7 @@ class TimedEvent {
     }
   private:
     void(*callback)(void* args) = NULL;
-    void* args;
+    void* args = NULL;
     long howOften;
     unsigned long nextExecution = 0;
     void reschedule() {

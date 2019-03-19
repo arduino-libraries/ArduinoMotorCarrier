@@ -8,7 +8,7 @@ class ServoMotor {
     void setDuty(int duty);
     void setFrequency(int frequency);
   private:
-    int pin;
+    int pin = -1;
     int duty = 0;
     int frequency = 50;
 };

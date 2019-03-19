@@ -12,10 +12,10 @@ class DCMotor {
     void setDuty(int duty);
     void setFrequency(int frequency);
     int duty = 0;
-    void* pid;
+    void* pid = NULL;
   private:
-    int in1;
-    int in2;
+    int in1 = -1;
+    int in2 = -1;
     int frequency = 100;
 };
 

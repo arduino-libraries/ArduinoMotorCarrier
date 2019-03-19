@@ -8,7 +8,7 @@ class Battery {
     void getFiltered();
     void readBattery();
   private:
-    int pin;
+    int pin = -1;
     int readBuf[10];
-    uint8_t index;
+    uint8_t index = 0;
 };

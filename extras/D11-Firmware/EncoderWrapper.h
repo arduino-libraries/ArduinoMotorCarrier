@@ -24,15 +24,15 @@ class EncoderWrapper {
         irqVelocityEnabled = false;
       }
     }
-    bool underflow;
-    bool overflow;
-    Fix16 velocity;
-    Fix16 position;
+    bool underflow = false;
+    bool overflow = false;
+    Fix16 velocity = 0.0f;
+    Fix16 position = 0.0f;
     Fix16 irqRatio = 2.0f;
     bool irqCountEnabled = false;
     bool irqVelocityEnabled = false;
     int targetCount = -1;
     Fix16 targetVelocity = -1.0;
   private:
-    Encoder* enc;
+    Encoder* enc = NULL;
 };

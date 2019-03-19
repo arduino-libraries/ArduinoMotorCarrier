@@ -14,7 +14,7 @@
 // compile me with target arduino:samd:mkrmotorshield:bootloader=0kb,pinmap=complete,lto=disabled during development
 // compile me with target arduino:samd:mkrmotorshield:bootloader=4kb,pinmap=complete,lto=enabled for release
 
-const char* FW_VERSION = "0.11";
+const char* FW_VERSION = "0.12";
 
 DCMotor* dcmotors[2];
 ServoMotor* servos[4];
@@ -22,14 +22,37 @@ EncoderWrapper* encoders[2];
 PIDWrapper* pid_control[2];
 Battery* battery;
 
-void led_on() {
+static inline void led_on() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
+
+static inline void led_off() {
+  digitalWrite(LED_BUILTIN, LOW);
+}
+
+static inline void led_toggle() {
+  static bool toggle = false;
+  digitalWrite(LED_BUILTIN, toggle);
+  toggle = !toggle;
+}
+
+volatile uint8_t command = 0;
+volatile uint8_t target = 0;
+volatile uint8_t irq_status = 0;
+volatile unsigned long nextTimedEvent = 0;
+volatile unsigned long lastMessageReceived = 0;
+unsigned long alivePing = 0;
 
 void setup() {
 
   WDT->CTRL.reg &= ~WDT_CTRL_ENABLE;
   while (WDT->STATUS.reg & WDT_STATUS_SYNCBUSY);
+
+  command = 0;
+  target = 0;
+  irq_status = 0;
+  nextTimedEvent = 0;
+  lastMessageReceived = 0;
 
   //temp_init();
   battery = new Battery(ADC_BATTERY);
@@ -54,22 +77,23 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(IRQ_PIN, OUTPUT);
   analogWriteResolution(8);
-}
 
-volatile uint8_t command = 0;
-volatile uint8_t target = 0;
-volatile uint8_t irq_status = 0;
-volatile unsigned long nextTimedEvent = 0;
-volatile unsigned long lastMessageReceived = 0;
+  for (int i = 0; i < 6; i++) {
+    led_toggle();
+    delay(50);
+  }
+}
 
 bool irq_enabled = true;
 
 void loop() {
-  if (command == RESET || ((lastMessageReceived != 0) && (millis() - lastMessageReceived > 10000))) {
+
+  if (command == RESET || ((lastMessageReceived != 0) && ((millis() - lastMessageReceived) > 10000))) {
+    led_on();
     reboot();
   }
   if (command == PING) {
-    lastMessageReceived = millis();
+    led_toggle();
   }
   executeTimedEvents();
 }
@@ -86,6 +110,8 @@ void receiveEvent(int howMany) {
     interrupts();
     return;
   }
+
+  lastMessageReceived = millis();
 
   if (Wire.available()) {
     target = Wire.read();
