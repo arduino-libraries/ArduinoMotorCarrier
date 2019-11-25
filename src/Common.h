@@ -57,10 +57,19 @@ enum IRQCause {
 #define MOTOR_4_PIN_A 4
 #define MOTOR_4_PIN_B 5
 
-#define IN1 A6
-#define IN2 A1
-#define IN3 A5
-#define IN4 A2
+
+#ifdef ARDUINO_SAMD_NANO_33_IOT
+  #define IN1 A7
+  #define IN2 A2
+  #define IN3 A6
+  #define IN4 A3
+#else
+  #define IN1 A6
+  #define IN2 A1
+  #define IN3 A5
+  #define IN4 A2
+#endif
+
 
 namespace mc {
 int getData(Commands cmd, uint8_t target, uint8_t* buf);
