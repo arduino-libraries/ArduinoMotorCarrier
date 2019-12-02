@@ -5,7 +5,7 @@
   This example code is in the public domain.
 */
 
-#include "MKRMotorCarrier.h"
+#include "ArduinoMotorCarrier.h"
 
 void setup() {
 

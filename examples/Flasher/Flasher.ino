@@ -9,7 +9,7 @@
 
 #include "Wire.h"
 #include "fw.h"
-#include "MKRMotorCarrier.h"
+#include "ArduinoMotorCarrier.h"
 
 #define I2C_ADDRESS 0x09
 

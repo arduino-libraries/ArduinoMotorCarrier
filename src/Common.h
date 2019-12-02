@@ -1,6 +1,6 @@
 /*
-  Common.h - Library for Arduino MKR Motor Shield
-  Copyright (c) 2018 Arduino AG.  All right reserved.
+  Common.h - Library for Arduino Motor Shields
+  Copyright (c) 2018-2019 Arduino AG.  All right reserved.
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
