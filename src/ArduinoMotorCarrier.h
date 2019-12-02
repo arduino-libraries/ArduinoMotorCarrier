@@ -1,6 +1,6 @@
 /*
-  MKRMotorShield.h - Library for Arduino MKR Motor Shield
-  Copyright (c) 2018 Arduino AG.  All right reserved.
+  ArduinoMotorCarrier.h - Library for Arduino Motor Shields
+  Copyright (c) 2018-2019 Arduino AG.  All right reserved.
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
@@ -14,8 +14,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef __MKRMOTORSHIELD__
-#define __MKRMOTORSHIELD__
+#ifndef __ARDUINOMOTORSHIELD__
+#define __ARDUINOMOTORSHIELD__
 
 #include <Wire.h>
 #include "Encoder.h"

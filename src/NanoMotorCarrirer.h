@@ -1,5 +1,4 @@
-/*
-  ServoMotor.cpp - Library for Arduino Motor Shields
+/*- Library for Arduino Motor Shields
   Copyright (c) 2018-2019 Arduino AG.  All right reserved.
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -14,24 +13,10 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "ServoMotor.h"
-#include "Common.h"
+#ifndef __NANOMOTORSHIELD__
+#define __NANOMOTORSHIELD__
 
-static int next_instance = 0;
+#warning "This Header is going to be deprecated please use ArduinoMotorCarrier.h"
+#include "ArduinoMotorCarrier.h"
 
-mc::ServoMotor::ServoMotor() {
-  instance = next_instance;
-  next_instance++;
-};
-
-void mc::ServoMotor::setAngle(int angle) {
-  setData(SET_PWM_DUTY_CYCLE_SERVO, instance, map(angle,0,180,7,28));
-}
-
-void mc::ServoMotor::detach() {
-  setData(SET_PWM_DUTY_CYCLE_SERVO, instance, -1);
-}
-
-void mc::ServoMotor::setFrequency(int frequency) {
-  setData(SET_PWM_FREQUENCY_SERVO, instance, frequency);
-}
+#endif
