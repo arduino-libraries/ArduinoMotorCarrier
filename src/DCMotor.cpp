@@ -72,6 +72,6 @@ void DCMotor::setDuty(int duty) {
 }
 
 void DCMotor::setFrequency(int frequency) {
-  //setData(SET_PWM_FREQUENCY_DC_MOTOR, instance, frequency);
+  setData(SET_PWM_FREQUENCY_DC_MOTOR, instance, frequency);
 }
 }
