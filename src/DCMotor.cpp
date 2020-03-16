@@ -16,6 +16,7 @@
 
 #include "DCMotor.h"
 #include "Common.h"
+#include <PWM.h>
 
 namespace mc {
 static int next_instance = 0;
@@ -73,5 +74,7 @@ void DCMotor::setDuty(int duty) {
 
 void DCMotor::setFrequency(int frequency) {
   //setData(SET_PWM_FREQUENCY_DC_MOTOR, instance, frequency);
+   SetPinFrequency(in1, frequency);
+   SetPinFrequency(in2, frequency);
 }
 }
