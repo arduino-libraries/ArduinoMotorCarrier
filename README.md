@@ -1,7 +1,7 @@
 # MKRMotorCarrier library
 
 
-This library is designed to use the MKR Motor carrier. The shield supports micro servo motors, dc motors and dc motors with encoder. This library, therefore, has functions and creates objects to support such hardware. Objects are automatically created when "MKRMotorShield.h" or "MKRMotorCarrier.h" is included, hence no need to initiate objects manually.
+This library is designed to use the MKR Motor carrier. The shield supports micro servo motors, dc motors and dc motors with encoder. This library, therefore, has functions and creates objects to support such hardware. Objects are automatically created when "ArduinoMotorCarrier.h" is included, hence no need to initiate objects manually.
 
 For more information about this library please visit us at
 
