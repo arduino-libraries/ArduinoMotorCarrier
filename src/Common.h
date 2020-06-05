@@ -42,6 +42,7 @@ enum Commands {
   GET_INTERNAL_TEMP,
   CLEAR_IRQ,
   GET_FREE_RAM,
+  GET_PID_VAL
 };
 
 enum IRQCause {
@@ -70,10 +71,13 @@ enum IRQCause {
   #define IN4 A2
 #endif
 
+#include "src/FpF.hpp"
+#define Fix16 mn::MFixedPoint::FpF32<8>
 
 namespace mc {
 int getData(Commands cmd, uint8_t target, uint8_t* buf);
 void setData(Commands cmd, uint8_t target, int data);
-void setDataPIDGains(Commands cmd, uint8_t target, int16_t P, int16_t I, int16_t D);
+void setDataPIDGains(Commands cmd, uint8_t target, Fix16 P, Fix16 I, Fix16 D);
+int getDataPIDGains(Commands cmd, uint8_t target, uint8_t* buf, int dataSize);
 int getData(Commands cmd, uint8_t* buf);
 }

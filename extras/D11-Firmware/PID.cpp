@@ -12,25 +12,20 @@ void calculatePID_wrapper(void* arg) {
 
     if (obj[i]->mode == CL_POSITION) {
       if (obj[i]->pid_pos->Compute()) {
-        //slew limit velocity command with max accel
         Fix16 curvelocmd = obj[i]->velocmd;
-        if ((prevvelocmd[i] - curvelocmd) > obj[i]->maxAcceleration) curvelocmd = prevvelocmd[i] - obj[i]->maxAcceleration;//limit decel
-        if ((curvelocmd - prevvelocmd[i]) > obj[i]->maxAcceleration) curvelocmd = prevvelocmd[i] + obj[i]->maxAcceleration;//limit accel
         //copy position PID output to velocity PID setpoint
         obj[i]->targetvelo = curvelocmd;
         //save curvelocmd for next iteration
         prevvelocmd[i] = curvelocmd;
+        int dutyout = (int16_t)curvelocmd ;
+        obj[i]->motor->setDuty(dutyout); //dutyout should be a value between -100 and 100.
       }
-    }
-
-    if (obj[i]->pid_velo->Compute()) {
-      int dutyout = int32_t(obj[i]->actualDuty);
-      //obj[i]->motor->setDuty(dutyout);  not working so using line below instead
-
-      //deadzone compensation
-      if (dutyout > 0) dutyout += 10;
-      if (dutyout < 0) dutyout -= 10;
-      obj[i]->motor->setDuty(dutyout);
+    } else {
+      //CL_VELOCITY
+      if (obj[i]->pid_velo->Compute()) {
+        int dutyout = int32_t(obj[i]->actualDuty);
+        obj[i]->motor->setDuty(dutyout);
+      }
     }
   }
 }

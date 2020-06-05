@@ -26,6 +26,7 @@ enum Commands {
   GET_INTERNAL_TEMP,
   CLEAR_IRQ,
   GET_FREE_RAM,
+  GET_PID_VAL
 };
 
 enum IRQCause {

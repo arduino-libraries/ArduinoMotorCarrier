@@ -20,12 +20,23 @@
 namespace mc {
 static int next_instance = 0;
 
+typedef struct {
+  Fix16 P;
+  Fix16 I;
+  Fix16 D;
+} PIDGains;
+
+union {
+  Fix16 rxFloat = Fix16(0.0);
+  uint8_t rxArray[4];
+} PIDGain;
+
 PID::PID() {
   instance = next_instance;
   next_instance++;
 }
 
-void PID::setGains(int16_t kp, int16_t ki, int16_t kd) {
+void PID::setGains(Fix16 kp, Fix16 ki, Fix16 kd) {
   setDataPIDGains(SET_PID_GAIN_CL_MOTOR, instance, kp, ki, kd);
 }
 
@@ -42,7 +53,11 @@ void PID::setSetpoint(cl_target control_target, int target) {
     setData(SET_POSITION_SETPOINT_CL_MOTOR, instance, target);
   }
   if (control_target == TARGET_VELOCITY) {
-    setData(SET_VELOCITY_SETPOINT_CL_MOTOR, instance, target);
+    if (!target) {
+      setData(SET_PWM_DUTY_CYCLE_DC_MOTOR, instance, target); //Fix target = 0 issue in PID_VELOCITY mode.
+    } else {
+      setData(SET_VELOCITY_SETPOINT_CL_MOTOR, instance, target);
+    }
   }
 }
 
@@ -57,6 +72,24 @@ void PID::setMaxVelocity(int maxVelocity) {
 void PID::setLimits(int16_t minDuty, int16_t maxDuty) {
   setData(SET_MIN_MAX_DUTY_CYCLE_CL_MOTOR, instance, (minDuty << 16 | maxDuty));
 }
+
+Fix16 mc::PID::getPgain() {
+  PIDGains pidGains;
+  int stat = getDataPIDGains(GET_PID_VAL, instance, (uint8_t*)&pidGains ,sizeof(pidGains));
+  return pidGains.P;
+}
+
+Fix16 mc::PID::getIgain() {
+  PIDGains pidGains;
+  int stat = getDataPIDGains(GET_PID_VAL, instance, (uint8_t*)&pidGains ,sizeof(pidGains));
+  return pidGains.I;
+}
+Fix16 mc::PID::getDgain() {
+  PIDGains pidGains;
+  int stat = getDataPIDGains(GET_PID_VAL, instance, (uint8_t*)&pidGains ,sizeof(pidGains));
+  return pidGains.D;
+}
+
 }
 
 namespace d21 {

@@ -26,6 +26,17 @@ void led_on() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
+typedef struct {
+  Fix16 P;
+  Fix16 I;
+  Fix16 D;
+} PIDGains;
+
+union PIDData {
+  Fix16 txFloat;
+  uint8_t txArray[4];
+} PIDGain;
+
 void setup() {
 
   WDT->CTRL.reg &= ~WDT_CTRL_ENABLE;
@@ -46,7 +57,7 @@ void setup() {
   encoders[1] = new EncoderWrapper(ENCODER_1_PIN_A, ENCODER_1_PIN_B, 0);
 
   pid_control[0] = new PIDWrapper(encoders[0]->position, encoders[0]->velocity, dcmotors[0], 0, 10, 100); //10ms period velo, 100ms period pos
-  pid_control[1] = new PIDWrapper(encoders[1]->position, encoders[1]->velocity, dcmotors[1], 1, 10, 100),
+  pid_control[1] = new PIDWrapper(encoders[1]->position, encoders[1]->velocity, dcmotors[1], 1, 10, 100);
 
   Wire.begin(I2C_ADDRESS);
   Wire.onRequest(requestEvent);
@@ -101,7 +112,7 @@ void receiveEvent(int howMany) {
     return;
   }
 
-  uint8_t buf[8];
+  uint8_t buf[12];
   int i = 0;
   while (Wire.available() && i < sizeof(buf)) {
     buf[i++] = (uint8_t)Wire.read();
@@ -135,13 +146,10 @@ void receiveEvent(int howMany) {
       break;
     case SET_PID_GAIN_CL_MOTOR:
       {
-        int16_t P16 = *((int16_t*)&buf[0]);
-        int16_t I16 = *((int16_t*)&buf[2]);
-        int16_t D16 = *((int16_t*)&buf[4]);
-        Fix16 P = ((Fix16)P16) / short(1000);
-        Fix16 I = ((Fix16)I16) / short(1000);
-        Fix16 D = ((Fix16)D16) / short(1000);
-        pid_control[target]->setGains(P, I , D);
+        Fix16 P = *((Fix16*)&buf[0]);
+        Fix16 I = *((Fix16*)&buf[4]);
+        Fix16 D = *((Fix16*)&buf[8]);
+        pid_control[target]->setGains(P, I, D);
         break;
       }
     case RESET_PID_GAIN_CL_MOTOR:
@@ -151,10 +159,10 @@ void receiveEvent(int howMany) {
       pid_control[target]->setControlMode((cl_control)value);
       break;
     case SET_POSITION_SETPOINT_CL_MOTOR:
-      pid_control[target]->setSetpoint(TARGET_POSITION, Fix16(value * 1.0));
+      pid_control[target]->setSetpoint(TARGET_POSITION, Fix16(value * 1.0)); //Change to integer. "value" is a 32 bit data type in this case (int).
       break;
     case SET_VELOCITY_SETPOINT_CL_MOTOR:
-      pid_control[target]->setSetpoint(TARGET_VELOCITY, Fix16(value * 1.0));
+      pid_control[target]->setSetpoint(TARGET_VELOCITY, Fix16(value * 1.0)); //Change to integer
       break;
     case SET_MAX_ACCELERATION_CL_MOTOR: {
         pid_control[target]->setMaxAcceleration(Fix16(value * 1.0));
@@ -211,6 +219,18 @@ void requestEvent() {
       break;
     case GET_FREE_RAM:
       Wire.write((int)FreeRam());
+      break;
+    case GET_PID_VAL:
+      Fix16 gains[3];
+      pid_control[target]->getGains((Fix16*)gains);
+
+      PIDGains pidGains;
+      pidGains.P = gains[0];
+      pidGains.I = gains[1];
+      pidGains.D = gains[2];
+
+      Wire.write((uint8_t*)&pidGains, sizeof(pidGains));
+
       break;
   }
   interrupts();
