@@ -53,10 +53,17 @@ enum IRQCause {
 #define I2C_ADDRESS   0x66
 #define IRQ_PIN       6
 
+#ifdef ARDUINO_SAMD_NANO_33_IOT
+#define MOTOR_3_PIN_A 2
+#define MOTOR_3_PIN_B 3
+#define MOTOR_4_PIN_A 5
+#define MOTOR_4_PIN_B 4
+#else
 #define MOTOR_3_PIN_A 3
 #define MOTOR_3_PIN_B 2
 #define MOTOR_4_PIN_A 4
 #define MOTOR_4_PIN_B 5
+#endif
 
 
 #ifdef ARDUINO_SAMD_NANO_33_IOT
