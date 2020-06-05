@@ -50,7 +50,7 @@ PIDWrapper::PIDWrapper(Fix16& inputpos, Fix16& inputvelo, DCMotor* motor, int in
   pid_pos->SetOutputLimits(Fix16(-30.0), Fix16(30.0)); //position pid can only command +/- max_velo
   pid_velo->SetOutputLimits(Fix16(-90.0), Fix16(90.0)); //velocity pid can only command +/- 100 PWM duty cycle
 
-  run();
+  stop();
 
   this->motor = motor;
   this->motor->pid = this;
