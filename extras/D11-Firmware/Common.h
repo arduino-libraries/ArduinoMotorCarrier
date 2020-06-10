@@ -43,7 +43,6 @@ enum IRQCause {
 #define MOTOR_2_COUNTER   TC1
 #define MOTOR_1_COUNTER   TC2
 
-#include "config.h"
 #ifdef NANO_MOTOR_CARRIER
 #define MOTOR_2_PIN_A     5
 #define MOTOR_2_PIN_B     4
