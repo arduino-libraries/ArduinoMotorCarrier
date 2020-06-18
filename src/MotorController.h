@@ -32,6 +32,9 @@ class MotorController {
     uint8_t getIrqStatus();
     int getFreeRam();
     volatile uint8_t irq_status;
+  private:
+    void enable_battery_charging();
+
 };
 }
 

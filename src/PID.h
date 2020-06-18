@@ -3,6 +3,10 @@
 
 #include "Arduino.h"
 #include "DCMotor.h"
+//-------------------------------- ----------------------
+#include "src/FpF.hpp"
+#define Fix16 mn::MFixedPoint::FpF32<8>
+//------------------------------------------------------
 
 typedef enum {
   CL_OPEN_LOOP = 0,
@@ -22,13 +26,16 @@ class PID {
   public:
     PID();
 
-    void setGains(int16_t kp, int16_t ki, int16_t kd);
+    void setGains(Fix16 kp, Fix16 ki, Fix16 kd);
     void resetGains();
     void setControlMode(cl_control mode);
     void setSetpoint(cl_target control_target, int target);
     void setMaxAcceleration(int maxAccel);
     void setMaxVelocity(int maxVelocity);
     void setLimits(int16_t minDuty, int16_t maxDuty);
+    Fix16 getPgain();
+    Fix16 getIgain();
+    Fix16 getDgain();
 
   private:
     int instance;

@@ -25,6 +25,7 @@
 #include "MotorController.h"
 #include "Common.h"
 #include "PID.h"
+#include "src/FpF.hpp"
 
 extern mc::MotorController controller;
 

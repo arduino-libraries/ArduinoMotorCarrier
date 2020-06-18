@@ -1,5 +1,5 @@
 /*
-  STANDALONE FIRMWARE UPDATE FOR MKR Motor Shiuld
+  STANDALONE FIRMWARE UPDATE FOR Arduino Motor Carrier
 
   To generate a new firmware, compile D11-Firmware with target MKRMotorShield, 4KB bootloader, LTO enabled, pinmap complete
   and execute
@@ -8,8 +8,13 @@
 */
 
 #include "Wire.h"
-#include "fw.h"
 #include "ArduinoMotorCarrier.h"
+
+#ifdef ARDUINO_SAMD_NANO_33_IOT
+#include "fw_nano.h"
+#else
+#include "fw_mkr.h"
+#endif
 
 #define I2C_ADDRESS 0x09
 
@@ -52,6 +57,9 @@ void setup() {
     Serial.println("Reset D11");
     setDataRunning(RESET, 0, 0);
     delay(10);
+  } else {
+    // TODO: on NanoMotorCarrier we have the change to forcefully reset the D11; do it now if it is unresponsive
+
   }
 
   // reset running D11

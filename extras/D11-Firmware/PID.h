@@ -35,6 +35,20 @@ class PIDWrapper {
 
     void resetGains();
 
+
+    void getGains(Fix16* gains) {
+      if (this->mode == CL_VELOCITY) {
+        gains[0] = pid_velo->GetKp();
+        gains[1] = pid_velo->GetKi();
+        gains[2] = pid_velo->GetKd();
+      }
+      if (this->mode == CL_POSITION) {
+        gains[0] = pid_pos->GetKp();
+        gains[1] = pid_pos->GetKi();
+        gains[2] = pid_pos->GetKd();
+      }
+    };
+
     void setControlMode(cl_control mode) {
       this->mode = mode;
       run();

@@ -26,6 +26,7 @@ enum Commands {
   GET_INTERNAL_TEMP,
   CLEAR_IRQ,
   GET_FREE_RAM,
+  GET_PID_VAL
 };
 
 enum IRQCause {
@@ -40,12 +41,25 @@ enum IRQCause {
 #define LED_BUILTIN   3
 
 #define MOTOR_2_COUNTER   TC1
+#define MOTOR_1_COUNTER   TC2
+
 #define MOTOR_2_PIN_A     4
 #define MOTOR_2_PIN_B     5
-
-#define MOTOR_1_COUNTER   TC2
 #define MOTOR_1_PIN_A     7
 #define MOTOR_1_PIN_B     6
+
+#include "config.h"
+#ifdef NANO_MOTOR_CARRIER
+#define ENCODER_1_PIN_A   8
+#define ENCODER_1_PIN_B   9
+#define ENCODER_2_PIN_A   11
+#define ENCODER_2_PIN_B   10
+#else
+#define ENCODER_1_PIN_A   9
+#define ENCODER_1_PIN_B   8
+#define ENCODER_2_PIN_A   10
+#define ENCODER_2_PIN_B   11
+#endif
 
 #define PWM_PIN_SERVO_COUNTER   TCC0
 
@@ -53,10 +67,5 @@ enum IRQCause {
 #define PWM_PIN_SERVO_2   23
 #define PWM_PIN_SERVO_3   16
 #define PWM_PIN_SERVO_4   22
-
-#define ENCODER_1_PIN_A   9
-#define ENCODER_1_PIN_B   8
-#define ENCODER_2_PIN_A   10
-#define ENCODER_2_PIN_B   11
 
 void requestAttention(int cause);

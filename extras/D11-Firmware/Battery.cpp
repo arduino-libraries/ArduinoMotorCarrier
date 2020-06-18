@@ -1,8 +1,13 @@
 #include "Battery.h"
 #include "Events.h"
 #include "Wire.h"
+#include "config.h"
 
+#ifdef NANO_MOTOR_CARRIER
+#define SCALE_FACTOR  (236)
+#else
 #define SCALE_FACTOR  (77)
+#endif
 
 void Battery::readBattery() {
   index++;
