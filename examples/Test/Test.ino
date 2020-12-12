@@ -1,7 +1,7 @@
 /*
   MKR Motor Shield Test sketch
   This sketch demonstrates some APIs exposed by the MKR Motor Shield library.
-  For the complete list, visit the reference page on https://www.arduino.cc/en/Reference/MKRMotorShield
+  For the complete list, visit the reference page on https://www.arduino.cc/en/Reference/MKRMotorCarrier
   This example code is in the public domain.
 */
 
