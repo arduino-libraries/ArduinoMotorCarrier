@@ -1,0 +1,54 @@
+name: Compile Firmware
+
+# See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/compile-firmware.yml"
+      - "extras/D11-Firmware/**"
+  pull_request:
+    paths:
+      - ".github/workflows/compile-firmware.yml"
+      - "extras/D11-Firmware/**"
+  schedule:
+    # Run every Tuesday at 8 AM UTC to catch breakage caused by changes to external resources (libraries, platforms).
+    - cron: "0 8 * * TUE"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.board.fqbn }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        board:
+          - fqbn: arduino:samd:mkrmotorshield:bootloader=0kb,pinmap=complete,lto=disabled
+            platforms: |
+              # Install MattairTech_Arduino:samd via Boards Manager for the toolchain
+              - name: MattairTech_Arduino:samd
+                source-url: https://www.mattairtech.com/software/arduino/package_MattairTech_index.json
+                # This needs to match with the version of MattairTech_Arduino:samd the Arduino fork is based on in order to get the right tool versions
+                version: 1.6.16
+              # Install the platform with Motor Carrier support
+              - name: arduino:samd
+                source-url: https://github.com/arduino/ArduinoCore-samd.git
+                version: mkrmotorcarrier
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Compile firmware
+        uses: arduino/compile-sketches@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          fqbn: ${{ matrix.board.fqbn }}
+          platforms: ${{ matrix.board.platforms }}
+          libraries: |
+            -
+          sketch-paths: |
+            - extras/D11-Firmware/D11-Firmware.ino
