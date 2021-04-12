@@ -66,7 +66,7 @@ void setup() //This code is executed once
 
 void loop() //This code is looped forever
 {
-  if ((millis() - lastTime) >= 100) //To stream at 10Hz without using additional timers
+  if ((millis() - lastTime) >= 100) //To stream at 10 Hz without using additional timers
   {
     lastTime = millis();
 

@@ -16,15 +16,15 @@ void setup()
   Serial.begin(115200);
   while (!Serial);
 
-  //Establishing the communication with the motor shield
+  //Establishing the communication with the Motor Carrier
   if (controller.begin())
   {
-    Serial.print("MKR Motor Shield connected, firmware version ");
+    Serial.print("Motor Carrier connected, firmware version ");
     Serial.println(controller.getFWVersion());
   }
   else
   {
-    Serial.println("Couldn't connect! Is the red led blinking? You may need to update the firmware with FWUpdater sketch");
+    Serial.println("Couldn't connect! Is the red LED blinking? You may need to update the firmware with FWUpdater sketch");
     while (1);
   }
 
@@ -40,7 +40,7 @@ void setup()
   Serial.print("V, Raw ");
   Serial.println(battery.getRaw());
 
-  int dutyInit = 0; // at 50 it works as espected, at 60 shift sides and is too small duty to move, at 70 is very big duty.
+  int dutyInit = 0; // at 50 it works as expected, at 60 shift sides and is too small duty to move, at 70 is very big duty.
   M1.setDuty(dutyInit);
   M2.setDuty(dutyInit);
   M3.setDuty(dutyInit);

@@ -9,15 +9,15 @@ static int duty = 0;
 
 void setup()
 {
-  //Establishing the communication with the motor shield
+  //Establishing the communication with the Motor Carrier
   if (controller.begin())
   {
-    Serial.print("MKR Motor Shield connected, firmware version ");
+    Serial.print("Motor Carrier connected, firmware version ");
     Serial.println(controller.getFWVersion());
   }
   else
   {
-    Serial.println("Couldn't connect! Is the red led blinking? You may need to update the firmware with FWUpdater sketch");
+    Serial.println("Couldn't connect! Is the red LED blinking? You may need to update the firmware with FWUpdater sketch");
     while (1);
   }
 
@@ -55,8 +55,8 @@ void loop() {
   Serial.println(encoder2.getCountPerSecond());
   Serial.println("");
 
-  //Keep active the communication MKR1000 & MKRMotorCarrier
-  //Ping the samd11
+  //Keep active the communication between Nano & Motor Carrier
+  //Ping the SAMD11
   controller.ping();
   //wait
   delay(50);

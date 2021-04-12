@@ -1,6 +1,6 @@
-/* Application starts from 1kB memory - Bootloader size is 1kB
+/* Application starts from 1 kB memory - Bootloader size is 1 kB
 Change the address if higher boot size is needed
-good site for quick conversions.
+Good site for quick conversions:
 http://www.binaryhexconverter.com/hex-to-decimal-converter */
 
 #include "nvm.h"

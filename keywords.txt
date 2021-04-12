@@ -1,5 +1,5 @@
 #################################################
-# Syntax Coloring Map For Arduino Motor Carrier
+# Syntax Coloring Map For ArduinoMotorCarrier
 #################################################
 
 #######################################

@@ -1,6 +1,6 @@
 /*
-  MKR Motor Shield Test sketch
-  This sketch demonstrates some APIs exposed by the MKR Motor Shield library.
+  MKR Motor Carrier Test sketch
+  This sketch demonstrates some APIs exposed by the ArduinoMotorCarrier library.
   For the complete list, visit the reference page on https://www.arduino.cc/en/Reference/MKRMotorCarrier
   This example code is in the public domain.
 */
@@ -12,12 +12,12 @@ void setup() {
   Serial.begin(115200);
   while (!Serial);
 
-  // Start communicationg with the motor shield
+  // Start communication with the Motor Carrier
   if (controller.begin()) {
-    Serial.print("MKR Motor Shield connected, firmware version ");
+    Serial.print("MKR Motor Carrier connected, firmware version ");
     Serial.println(controller.getFWVersion());
   } else {
-    Serial.println("Couldn't connect! Is the red led blinking? You may need to update the firmware with FWUpdater sketch");
+    Serial.println("Couldn't connect! Is the red LED blinking? You may need to update the firmware with FWUpdater sketch");
     while (1);
   }
 

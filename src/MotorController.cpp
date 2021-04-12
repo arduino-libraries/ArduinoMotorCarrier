@@ -1,5 +1,5 @@
 /*
-  MotorCOntroller.cpp - Library for Arduino Motor Shields
+  MotorCOntroller.cpp - Library for Arduino Motor Carriers
   Copyright (c) 2018-2019 Arduino AG.  All right reserved.
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -50,8 +50,8 @@ float mc::MotorController::getTemperature() {
 int mc::MotorController::begin() {
   Wire.begin();
 
-  // PMIC initialization raw APIs: are sused to initialize the
-  // PMIC when used with nano 33 iot
+  // PMIC initialization raw APIs: are used to initialize the
+  // PMIC when used with Nano 33 IoT
 #ifdef ARDUINO_SAMD_NANO_33_IOT
    Serial.println("Board: Nano 33 IoT");
    enable_battery_charging();
@@ -79,11 +79,11 @@ int mc::MotorController::getFreeRam() {
 void mc::MotorController::enable_battery_charging() {
   Wire.beginTransmission(PMIC_ADDRESS);
   Wire.write(PMIC_REG00);
-  Wire.write(0x06); // min sys voltage 3.88V + max input current 2.0 A
+  Wire.write(0x06); // min sys voltage 3.88 V + max input current 2.0 A
   Wire.endTransmission();
   Wire.beginTransmission(PMIC_ADDRESS);
   Wire.write(PMIC_REG01);
-  Wire.write(0x1B); // Charge Battery + Minimum System Voltage 3.5V
+  Wire.write(0x1B); // Charge Battery + Minimum System Voltage 3.5 V
   Wire.endTransmission();
   Wire.beginTransmission(PMIC_ADDRESS);
   Wire.write(PMIC_REG02);
@@ -91,7 +91,7 @@ void mc::MotorController::enable_battery_charging() {
   Wire.endTransmission();
   Wire.beginTransmission(PMIC_ADDRESS);
   Wire.write(PMIC_REG04);
-  Wire.write(0x9E); // Charge Voltage Limit 4.128V
+  Wire.write(0x9E); // Charge Voltage Limit 4.128 V
   Wire.endTransmission();
   Wire.beginTransmission(PMIC_ADDRESS);
   Wire.write(PMIC_REG05);
