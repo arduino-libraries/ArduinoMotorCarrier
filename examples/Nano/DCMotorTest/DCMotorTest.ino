@@ -13,15 +13,15 @@ void setup()
   Serial.begin(115200);
   //while (!Serial);
 
-  //Establishing the communication with the motor shield
+  //Establishing the communication with the Motor Carrier
   if (controller.begin())
   {
-    Serial.print("MKR Motor Shield connected, firmware version ");
+    Serial.print("Motor Carrier connected, firmware version ");
     Serial.println(controller.getFWVersion());
   }
   else
   {
-    Serial.println("Couldn't connect! Is the red led blinking? You may need to update the firmware with FWUpdater sketch");
+    Serial.println("Couldn't connect! Is the red LED blinking? You may need to update the firmware with FWUpdater sketch");
     while (1);
   }
 
@@ -30,7 +30,7 @@ void setup()
   controller.reboot();
   delay(500);
 
-  int dutyInit = 0; // at 50 it works as espected, at 60 shift sides and is too small duty to move, at 70 is very big duty.
+  int dutyInit = 0; // at 50 it works as expected, at 60 shift sides and is too small duty to move, at 70 is very big duty.
   M1.setDuty(dutyInit);
   M2.setDuty(dutyInit);
   M3.setDuty(dutyInit);
@@ -49,7 +49,7 @@ void loop() {
   //Take the battery status
   //float batteryVoltage = (float)battery.getConverted();
 
-  //Reset to the default values if the battery level is lower than 11V
+  //Reset to the default values if the battery level is lower than 11 V
   //  if (batteryVoltage < 11)
   //  {
   //    Serial.println(" ");
@@ -89,8 +89,8 @@ void loop() {
     delay(10);
   }
 
-  //Keep active the communication MKR1000 & MKRMotorCarrier
-  //Ping the samd11
+  //Keep active the communication between Nano & Motor Carrier
+  //Ping the SAMD11
   controller.ping();
   //wait
   delay(50);

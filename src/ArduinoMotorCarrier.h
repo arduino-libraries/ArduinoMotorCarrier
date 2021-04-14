@@ -1,5 +1,5 @@
 /*
-  ArduinoMotorCarrier.h - Library for Arduino Motor Shields
+  ArduinoMotorCarrier.h - Library for Arduino Motor Carriers
   Copyright (c) 2018-2019 Arduino AG.  All right reserved.
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public

@@ -56,7 +56,7 @@ void setup() {
   encoders[0] = new EncoderWrapper(ENCODER_2_PIN_A, ENCODER_2_PIN_B, 1);
   encoders[1] = new EncoderWrapper(ENCODER_1_PIN_A, ENCODER_1_PIN_B, 0);
 
-  pid_control[0] = new PIDWrapper(encoders[0]->position, encoders[0]->velocity, dcmotors[0], 0, 10, 100); //10ms period velo, 100ms period pos
+  pid_control[0] = new PIDWrapper(encoders[0]->position, encoders[0]->velocity, dcmotors[0], 0, 10, 100); //10 ms period velo, 100 ms period pos
   pid_control[1] = new PIDWrapper(encoders[1]->position, encoders[1]->velocity, dcmotors[1], 1, 10, 100);
 
   Wire.begin(I2C_ADDRESS);

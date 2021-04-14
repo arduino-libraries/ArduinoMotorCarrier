@@ -1,5 +1,5 @@
 /*
-  MKRMotorCarrier.h - Library for Arduino Motor Shields
+  MKRMotorCarrier.h - Library for Arduino Motor Carriers
   Copyright (c) 2018-2019 Arduino AG.  All right reserved.
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,7 @@
 #ifndef __MKRMOTORSHIELD__
 #define __MKRMOTORSHIELD__
 
-#warning "This Header is going to be deprecated please use ArduinoMotorCarrier.h"
+#warning "This header is going to be deprecated please use ArduinoMotorCarrier.h"
 #include "ArduinoMotorCarrier.h"
 
 #endif
