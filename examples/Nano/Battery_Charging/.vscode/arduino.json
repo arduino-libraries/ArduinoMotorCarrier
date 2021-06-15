@@ -1,0 +1,5 @@
+{
+    "board": "samd-git:samd:nano_33_iot",
+    "port": "COM6",
+    "sketch": "NanoMotorCarrier-BatteryChargerTest-2.ino"
+}
