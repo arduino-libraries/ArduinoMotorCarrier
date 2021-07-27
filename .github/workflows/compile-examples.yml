@@ -94,9 +94,7 @@ jobs:
             libraries: |
               -
             sketch-paths: |
-              - examples/Motor_test
-              - examples/Motor_test_encoder
-              - examples/Servo_test
+              - examples/MKR
 
     steps:
       - name: Checkout repository
@@ -114,7 +112,6 @@ jobs:
             ${{ matrix.libraries }}
           sketch-paths: |
             - examples/Flasher
-            - examples/Test
             ${{ matrix.sketch-paths }}
           enable-deltas-report: true
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
