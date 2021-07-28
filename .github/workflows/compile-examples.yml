@@ -88,15 +88,13 @@ jobs:
               - name: BNO055
               - name: Arduino_BQ24195
             sketch-paths: |
-              - examples/Nano
+              - examples/NanoMotorCarrier
           - board:
               type: mkr
             libraries: |
               -
             sketch-paths: |
-              - examples/Motor_test
-              - examples/Motor_test_encoder
-              - examples/Servo_test
+              - examples/MKRMotorCarrier
 
     steps:
       - name: Checkout repository
@@ -114,7 +112,7 @@ jobs:
             ${{ matrix.libraries }}
           sketch-paths: |
             - examples/Flasher
-            - examples/Test
+            - examples/MKRMotorCarrier/Test
             ${{ matrix.sketch-paths }}
           enable-deltas-report: true
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
