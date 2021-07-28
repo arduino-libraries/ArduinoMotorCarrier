@@ -96,6 +96,7 @@ jobs:
             sketch-paths: |
               - examples/MKRMotorCarrier
 
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -113,6 +114,7 @@ jobs:
           sketch-paths: |
             - examples/Flasher
             - examples/MKRMotorCarrier/Test
+
             ${{ matrix.sketch-paths }}
           enable-deltas-report: true
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
