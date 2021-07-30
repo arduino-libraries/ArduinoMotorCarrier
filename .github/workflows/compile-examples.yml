@@ -113,7 +113,6 @@ jobs:
             ${{ matrix.libraries }}
           sketch-paths: |
             - examples/Flasher
-            - examples/MKRMotorCarrier/Test
 
             ${{ matrix.sketch-paths }}
           enable-deltas-report: true
