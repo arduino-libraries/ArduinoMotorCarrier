@@ -110,7 +110,7 @@ Allow setting Motor1 or Motor2 to a specific speed or position. There are two PI
 #### Syntax
 
 ```
-pid1. setGains(int P, int I, int D)
+pid1. setGains(float P, float I, float D)
 ```
 
 #### Functions
