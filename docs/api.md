@@ -115,7 +115,7 @@ pid1.setGains(float P, float I, float D)
 
 #### Functions
 
-* _setGains(float P, float I, float D)_: Set PID gains. (`int` type for MKRMotorCarrier)
+* _setGains(float P, float I, float D)_: Set PID gains.
 * _resetGains()_: Reset PID gains to factory default settings.
 * _setControlMode(cl_control)_: Set control mode to either `CL_VELOCITY` or `CL_POSITION`.
 * _setSetpoint(cl_mode, int target)_: Set a specific velocity or position in one of the motors. Define cl_mode as `TARGET_POSITION` or `TARGET_VELOCITY` and the desired value in target.
