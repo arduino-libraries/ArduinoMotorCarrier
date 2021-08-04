@@ -71,14 +71,6 @@ jobs:
             platforms: |
               - name: arduino:samd
             type: mkr
-          - fqbn: arduino:mbed_portenta:envie_m4
-            platforms: |
-              - name: arduino:mbed_portenta
-            type: mkr
-          - fqbn: arduino:mbed_portenta:envie_m7
-            platforms: |
-              - name: arduino:mbed_portenta
-            type: mkr
 
         # make board type-specific customizations to the matrix jobs
         include:
