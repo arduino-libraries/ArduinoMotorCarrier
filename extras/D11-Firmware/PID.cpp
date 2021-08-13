@@ -18,13 +18,13 @@ void calculatePID_wrapper(void* arg) {
         //save curvelocmd for next iteration
         prevvelocmd[i] = curvelocmd;
         int dutyout = (int16_t)curvelocmd ;
-        obj[i]->motor->setDuty(dutyout); //dutyout should be a value between -100 and 100.
+        obj[i]->motor->setDuty(-dutyout); //dutyout should be a value between -100 and 100.
       }
     } else {
       //CL_VELOCITY
       if (obj[i]->pid_velo->Compute()) {
         int dutyout = int32_t(obj[i]->actualDuty);
-        obj[i]->motor->setDuty(dutyout);
+        obj[i]->motor->setDuty(-dutyout);
       }
     }
   }

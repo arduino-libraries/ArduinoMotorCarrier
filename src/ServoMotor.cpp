@@ -25,7 +25,8 @@ mc::ServoMotor::ServoMotor() {
 };
 
 void mc::ServoMotor::setAngle(int angle) {
-  setData(SET_PWM_DUTY_CYCLE_SERVO, instance, map(angle,0,180,7,28));
+  //setData(SET_PWM_DUTY_CYCLE_SERVO, instance, map(angle,0,180,7,28));
+  setData(SET_PWM_DUTY_CYCLE_SERVO, instance, map(angle,0,180,600000,1740000));//new servo resolution
 }
 
 void mc::ServoMotor::detach() {

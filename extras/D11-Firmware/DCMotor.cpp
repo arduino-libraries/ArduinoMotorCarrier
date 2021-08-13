@@ -9,7 +9,8 @@ void DCMotor::setDuty(int duty) {
   }
 
   // scale duty to period
-  duty = duty * 255 / 100;
+  //duty = duty * 255 / 100;
+  duty = duty * 16777215/ 100; //due to new servo resolution
 
   if (duty > 0) {
     analogWrite(in1, 0);
