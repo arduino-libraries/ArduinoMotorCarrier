@@ -1,5 +1,4 @@
-#include <MKRMotorCarrier_PID_test.h>
-//#include <MKRMotorCarrier.h>
+#include <ArduinoMotorCarrier.h>
 #define INTERRUPT_PIN 6
 
 //Variable to store the battery voltage
@@ -9,6 +8,9 @@ static int batteryVoltage;
 static int duty = 0;
 
 int target;
+float P;
+float I;
+float D;
 
 void setup()
 {
@@ -16,15 +18,15 @@ void setup()
   Serial.begin(115200);
   while (!Serial);
 
-  //Establishing the communication with the Motor Carrier
+  //Establishing the communication with the motor shield
   if (controller.begin())
   {
-    Serial.print("Motor Carrier connected, firmware version ");
+    Serial.print("MKR Motor Shield connected, firmware version ");
     Serial.println(controller.getFWVersion());
   }
   else
   {
-    Serial.println("Couldn't connect! Is the red LED blinking? You may need to update the firmware with FWUpdater sketch");
+    Serial.println("Couldn't connect! Is the red led blinking? You may need to update the firmware with FWUpdater sketch");
     while (1);
   }
 
@@ -40,7 +42,7 @@ void setup()
   Serial.print("V, Raw ");
   Serial.println(battery.getRaw());
 
-  int dutyInit = 0; // at 50 it works as expected, at 60 shift sides and is too small duty to move, at 70 is very big duty.
+  int dutyInit = 0; // at 50 it works as espected, at 60 shift sides and is too small duty to move, at 70 is very big duty.
   M1.setDuty(dutyInit);
   M2.setDuty(dutyInit);
   M3.setDuty(dutyInit);
@@ -48,47 +50,51 @@ void setup()
   Serial.print("Duty: ");
   Serial.println(dutyInit);
 
+  P = 0.07f;//0.07 //0.2
+  I = 0.0f;
+  D = 0.007f;
+
   /************* PID 1 ***********************/
 
-//  pid1.setControlMode(CL_POSITION);
-//
-//  //pid1.resetGains();
-//  //pid1.setLimits(-100,100);
-//  pid1.setGains(0.01f, 0.017f, 0.0f); //Proportional(change) Integral(change) Derivative
-//  Serial.print("P Gain: ");
-//  Serial.println((float)pid1.getPgain());
-//  Serial.print("I Gain: ");
-//  Serial.println((float)pid1.getIgain());
-//  Serial.print("D Gain: ");
-//  Serial.println((float)pid1.getDgain(), 7);
-//  Serial.println("");
-//
-//  encoder1.resetCounter(0);
-//  Serial.print("encoder1: ");
-//  Serial.println(encoder1.getRawCount());
-//  target = 1000;
-//  pid1.setSetpoint(TARGET_POSITION, target);
-
-  /************* PID 2 ***********************/
-
-  pid2.setControlMode(CL_POSITION);
+  pid1.setControlMode(CL_POSITION);
 
   //pid1.resetGains();
   //pid1.setLimits(-100,100);
-  pid2.setGains(0.1f, 0.0f, 0.0f); //Proportional(change) Integral(change) Derivative
+  pid1.setGains(P, I, D); //Proportional(change) Integral(change) Derivative
   Serial.print("P Gain: ");
-  Serial.println((float)pid2.getPgain());
+  Serial.println((float)pid1.getPgain());
   Serial.print("I Gain: ");
-  Serial.println((float)pid2.getIgain());
+  Serial.println((float)pid1.getIgain());
   Serial.print("D Gain: ");
-  Serial.println((float)pid2.getDgain(), 7);
+  Serial.println((float)pid1.getDgain(), 7);
   Serial.println("");
 
-  encoder2.resetCounter(0);
-  Serial.print("encoder2: ");
-  Serial.println(encoder2.getRawCount());
-  target = 1000;
-  pid2.setSetpoint(TARGET_POSITION, target);
+  encoder1.resetCounter(0);
+  Serial.print("encoder1: ");
+  Serial.println(encoder1.getRawCount());
+  target = 5000;
+  pid1.setSetpoint(TARGET_POSITION, target);
+
+  /************* PID 2 ***********************/
+
+  //  pid2.setControlMode(CL_POSITION);
+  //
+  //  //pid1.resetGains();
+  //  //pid1.setLimits(-100,100);
+  //  pid2.setGains(P, I, D); //Proportional(change) Integral(change) Derivative
+  //  Serial.print("P Gain: ");
+  //  Serial.println((float)pid2.getPgain());
+  //  Serial.print("I Gain: ");
+  //  Serial.println((float)pid2.getIgain());
+  //  Serial.print("D Gain: ");
+  //  Serial.println((float)pid2.getDgain(), 7);
+  //  Serial.println("");
+  //
+  //  encoder2.resetCounter(0);
+  //  Serial.print("encoder2: ");
+  //  Serial.println(encoder2.getRawCount());
+  //  target = 1000;
+  //  pid2.setSetpoint(TARGET_POSITION, target);
 
 }
 
@@ -96,32 +102,29 @@ void loop() {
 
   /************* PID 1 ***********************/
 
-//  Serial.print("encoder1: ");
-//  Serial.print(encoder1.getRawCount());
-//  Serial.print(" target: ");
-//  Serial.println(target);
-//  if (encoder1.getRawCount() == target) {
-//    target += 1000;
-//    Serial.print("Target reached: Setting new target..");
-//    pid1.setSetpoint(TARGET_POSITION, target);
-//    //delay(5000);
-//  }
-
-  /************* PID 2 ***********************/
-
-  Serial.print("encoder2: ");
-  Serial.print(encoder2.getRawCount());
+  Serial.print("encoder1: ");
+  Serial.print(encoder1.getRawCount());
   Serial.print(" target: ");
   Serial.println(target);
-  if (encoder2.getRawCount() == target) {
+  if (encoder1.getRawCount() == target) {
     target += 1000;
     Serial.print("Target reached: Setting new target..");
-    pid2.setSetpoint(TARGET_POSITION, target);
+    pid1.setSetpoint(TARGET_POSITION, target);
     //delay(5000);
   }
 
-  //---------------------------------------
-  controller.ping();
-  //wait
+  /************* PID 2 ***********************/
+
+  //  Serial.print("encoder2: ");
+  //  Serial.print(encoder2.getRawCount());
+  //  Serial.print(" target: ");
+  //  Serial.println(target);
+  //  if (encoder2.getRawCount() == target) {
+  //    target += 1000;
+  //    Serial.print("Target reached: Setting new target..");
+  //    pid2.setSetpoint(TARGET_POSITION, target);
+  //    //delay(5000);
+  //  }
+
   delay(50);
 }
