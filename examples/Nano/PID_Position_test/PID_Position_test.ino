@@ -18,7 +18,7 @@ void setup()
   Serial.begin(115200);
   while (!Serial);
 
-  //Establishing the communication with the motor carrier
+  //Establishing the communication with the Motor Carrier
   if (controller.begin())
   {
     Serial.print("Motor Carrier connected, firmware version ");
