@@ -21,7 +21,7 @@ void setup()
   //Establishing the communication with the motor carrier
   if (controller.begin())
   {
-    Serial.print("MKR Motor Carrier connected, firmware version ");
+    Serial.print("Motor Carrier connected, firmware version ");
     Serial.println(controller.getFWVersion());
   }
   else
