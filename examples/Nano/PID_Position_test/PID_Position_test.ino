@@ -1,6 +1,5 @@
 #include <MKRMotorCarrier_PID_test.h>
 //#include <MKRMotorCarrier.h>
-#define INTERRUPT_PIN 6
 
 //Variable to store the battery voltage
 static int batteryVoltage;
