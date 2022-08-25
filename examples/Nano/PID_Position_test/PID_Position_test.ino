@@ -1,5 +1,6 @@
-#include <MKRMotorCarrier_PID_test.h>
+//#include <MKRMotorCarrier_PID_test.h>
 //#include <MKRMotorCarrier.h>
+#include <ArduinoMotorCarrier.h>
 #define INTERRUPT_PIN 6
 
 //Variable to store the battery voltage
