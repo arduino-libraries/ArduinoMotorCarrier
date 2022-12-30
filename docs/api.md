@@ -16,7 +16,7 @@ battery.getFiltered()
 
 #### Returns
 
-* _getRaw()_: returns the raw ADC read from the battery as am integer.
+* _getRaw()_: returns the raw ADC read from the battery as an integer.
 * _getConverted()_: returns the battery voltage converted to volts as a floating point.
 * _getFiltered()_: returns the battery voltage converted to volts and filtered in the last 10 seconds.
 
@@ -110,12 +110,12 @@ Allow setting Motor1 or Motor2 to a specific speed or position. There are two PI
 #### Syntax
 
 ```
-pid1. setGains(int P, int I, int D)
+pid1.setGains(float P, float I, float D)
 ```
 
 #### Functions
 
-* _setGains(float P, float I, float D)_: Set PID gains. (`int` type for MKRMotorCarrier)
+* _setGains(float P, float I, float D)_: Set PID gains.
 * _resetGains()_: Reset PID gains to factory default settings.
 * _setControlMode(cl_control)_: Set control mode to either `CL_VELOCITY` or `CL_POSITION`.
 * _setSetpoint(cl_mode, int target)_: Set a specific velocity or position in one of the motors. Define cl_mode as `TARGET_POSITION` or `TARGET_VELOCITY` and the desired value in target.
