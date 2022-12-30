@@ -112,7 +112,7 @@ void setup() {
 
   Wire.beginTransmission(0x66);
   Wire.write((uint8_t)GET_VERSION);
-  Wire.write((uint32_t)0);
+  Wire.write(0);
   Wire.endTransmission();
 
   Wire.requestFrom(0x66, 5);

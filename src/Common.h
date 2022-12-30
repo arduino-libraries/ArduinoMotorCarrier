@@ -14,6 +14,10 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#if defined(ARDUINO_PORTENTA_H7_M7) || defined(ARDUINO_PORTENTA_H7_M4)
+#define RESET _RESET
+#endif
+
 enum Commands {
   GET_VERSION = 0x01,
   RESET,
