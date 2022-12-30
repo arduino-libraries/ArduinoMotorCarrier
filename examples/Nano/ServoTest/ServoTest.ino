@@ -2,7 +2,6 @@
 #include <ArduinoMotorCarrier.h>
 //#include <MKRMotorCarrier.h>
 //#include <MKRMotorCarrier_REV2.h>
-#define INTERRUPT_PIN 6
 
 
 void setup()
