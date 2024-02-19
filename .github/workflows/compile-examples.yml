@@ -35,42 +35,52 @@ jobs:
             platforms: |
               - name: arduino:samd
             type: nano
+            artifact-name-suffix: arduino-samd-nano_33_iot
           - fqbn: arduino:samd:mkr1000
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkr1000
           - fqbn: arduino:samd:mkrzero
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkrzero
           - fqbn: arduino:samd:mkrwifi1010
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkrwifi1010
           - fqbn: arduino:samd:mkrfox1200
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkrfox1200
           - fqbn: arduino:samd:mkrwan1300
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkrwan1300
           - fqbn: arduino:samd:mkrwan1310
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkrwan1310
           - fqbn: arduino:samd:mkrgsm1400
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkrgsm1400
           - fqbn: arduino:samd:mkrnb1500
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkrnb1500
           - fqbn: arduino:samd:mkrvidor4000
             platforms: |
               - name: arduino:samd
             type: mkr
+            artifact-name-suffix: arduino-samd-mkrvidor4000
           - fqbn: arduino:mbed_portenta:envie_m7:target_core=cm4
             platforms: |
               - name: arduino:mbed_portenta
@@ -79,6 +89,7 @@ jobs:
             platforms: |
               - name: arduino:mbed_portenta
             type: mkr
+            artifact-name-suffix: arduino-mbed_portenta-envie_m7
 
         # make board type-specific customizations to the matrix jobs
         include:
@@ -123,4 +134,4 @@ jobs:
         with:
           if-no-files-found: error
           path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: ${{ env.SKETCHES_REPORTS_PATH }}
+          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
